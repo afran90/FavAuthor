@@ -1,24 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Routes,Link } from "react-router-dom";
+import { AuthorList } from './pages/AuthorList';
+import { FavouriteAuthors } from './pages/FavoriteAuthors';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <BrowserRouter>
+  <div className="content">
+  <div className="toolbar">
+  </div>
+  <div className="nav">
+    <a href="/AuthorList" className="block">
+      <Link to="/AuthorList">Author List</Link>
+    </a>
+    <a  className="block">
+      <Link to="/FavouriteAuthors">Fav Author List</Link>
+    </a>
+  </div>
+
+  <div className="main">
+      <Routes>
+        <Route path="/" element={<AuthorList />}/>
+        <Route path="/AuthorList" element={<AuthorList/>}/>
+        <Route path="/FavouriteAuthors" element={<FavouriteAuthors/>}/>
+      </Routes>
+  </div>
+
+</div>
+</BrowserRouter>
+
   );
 }
 
