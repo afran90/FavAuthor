@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { Paginator } from "./component/Paginator";
-import { ReactComponent as FavoriteIcon } from "../asset/favregular.svg";
-import { ReactComponent as FavoriteYellowIcon } from "../asset/favyellow.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavAuthor, removeFavAuthor } from "./authorSlice";
+import { AuthorCard } from "./component/AuthorCard";
 
 export const AuthorList = () => {
   const [authors, setAuthors] = useState([]);
-  const [favAuthors, setFavAuthors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [limit, setLimit] = useState(10);
+  const limit = 10;
   const [skip, setSkip] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const dispatch = useDispatch();
+  const favAuthors = useSelector((state) => state.author.favAuthor);
   useEffect(() => {
-    // Function to fetch data from the API
     const fetchAuthors = async () => {
       try {
         const response = await fetch(
@@ -35,20 +35,12 @@ export const AuthorList = () => {
     return () => {};
   }, [skip, limit]);
 
-  const truncateText = (text, maxLength) => {
-    return text.length > maxLength
-      ? `${text.substring(0, maxLength)}...`
-      : text;
-  };
-
   const addToFavorite = (author) => {
-    console.log(author);
+    if (!author) return;
     if (favAuthors.filter((id) => id._id === author._id).length > 0) {
-      // If author is already in favorites, remove from favorites
-      setFavAuthors(favAuthors.filter((id) => id._id !== author._id));
+      dispatch(removeFavAuthor(author._id));
     } else {
-      // If author is not in favorites, add to favorites
-      setFavAuthors([...favAuthors, author]);
+      dispatch(addFavAuthor([...favAuthors, author]));
     }
   };
 
@@ -65,31 +57,13 @@ export const AuthorList = () => {
         ) : (
           <div className="grid-container">
             {authors.map((author) => (
-              <div key={author._id} className="card">
-                <div
-                  className="favorite-btn"
-                  onClick={() => addToFavorite(author)}
-                >
-                  {favAuthors.filter((id) => id._id === author._id).length ===
-                  0 ? (
-                    <FavoriteIcon className="image-icon" />
-                  ) : (
-                    <FavoriteYellowIcon />
-                  )}
-                </div>
-                <div className="author-details">
-                  <h3 className="mt-1">{author.name}</h3>
-                  <p className="m-1">{truncateText(author.bio, 75)}</p>
-                  <a
-                    href={author.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="read-more-btn m-1"
-                  >
-                    Read More
-                  </a>
-                </div>
-              </div>
+              <AuthorCard
+                author={author}
+                onClick={addToFavorite}
+                isFavAuthor={
+                  favAuthors.filter((id) => id._id === author._id).length > 0
+                }
+              />
             ))}
           </div>
         )}
