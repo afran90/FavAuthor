@@ -23,13 +23,13 @@ export const FavouriteAuthors = () => {
           ))}
         </div>
       </div>
-      <div>
+      {/* <div>
         <Paginator
           currentPage={currentPage}
           totalPages={Math.ceil(favAuthors.length / 10)}
           onPageChange={handlePageChange}
         />
-      </div>
+      </div> */}
     </>
   );
 };
