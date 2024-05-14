@@ -2,12 +2,14 @@ import './App.css';
 import { BrowserRouter, Route, Routes,Link } from "react-router-dom";
 import { AuthorList } from './pages/AuthorList';
 import { FavouriteAuthors } from './pages/FavoriteAuthors';
+import { ToolNavBar } from './pages/component/ToolNavBar';
 
 function App() {
   return (
   <BrowserRouter>
   <div className="content">
   <div className="toolbar">
+      <ToolNavBar/>
   </div>
   <div className="nav">
     <a href="/AuthorList" className="block">
