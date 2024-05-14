@@ -15,7 +15,7 @@ function App() {
     <a href="/AuthorList" className="block">
       <Link to="/AuthorList">Author List</Link>
     </a>
-    <a  className="block">
+    <a href="/FavouriteAuthors" className="block">
       <Link to="/FavouriteAuthors">Fav Author List</Link>
     </a>
   </div>

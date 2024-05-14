@@ -2,14 +2,18 @@
 // import { Paginator } from "./component/Paginator";
 import { useSelector } from "react-redux";
 import { AuthorCard } from "./component/AuthorCard";
+import { useDispatch } from "react-redux";
+import { addFavAuthor, removeFavAuthor } from "./authorSlice";
 
 export const FavouriteAuthors = () => {
+  const dispatch = useDispatch();
   const favAuthors = useSelector((state) => state.author.favAuthor);
-  //const [currentPage, setCurrentPage] = useState(1);
-  function addToFavorite() {}
-  // function handlePageChange(page) {
-  //   setCurrentPage(page);
-  // }
+
+  const toggleFavorite = (author) => {
+    if (!author) return;
+    dispatch(removeFavAuthor(author._id));
+  };
+
   return (
     <>
       <div className="author-list">
@@ -17,7 +21,7 @@ export const FavouriteAuthors = () => {
           {favAuthors.map((author) => (
             <AuthorCard
               author={author}
-              onClick={addToFavorite}
+              onClick={toggleFavorite}
               isFavAuthor={true}
             />
           ))}

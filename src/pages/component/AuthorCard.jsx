@@ -1,12 +1,20 @@
+import { useState } from "react";
 import { ReactComponent as FavoriteIcon } from "../../asset/favregular.svg";
 import { ReactComponent as FavoriteYellowIcon } from "../../asset/favyellow.svg";
+import Toast from "./Toast";
 export const AuthorCard = ({ author, onClick, isFavAuthor = false }) => {
+  const [showToast, setShowToast] = useState(false);
   const truncateText = (text, maxLength) => {
     return text.length > maxLength
       ? `${text.substring(0, maxLength)}...`
       : text;
   };
   const handleClick = () => {
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 1000);
+
     onClick(author);
   };
   return (
@@ -32,6 +40,13 @@ export const AuthorCard = ({ author, onClick, isFavAuthor = false }) => {
           </a>
         </div>
       </div>
+      {showToast && (
+        <Toast
+          message={
+            !isFavAuthor ? "Removed from favorites" : "Added to favorites"
+          }
+        />
+      )}
     </>
   );
 };

@@ -1,12 +1,10 @@
-
-
 .content{
   display: grid;
   grid-template-areas: 
   "toolbar toolbar"
   "nav main";
   grid-template-columns: 200px 1fr;
-  grid-template-rows: 10% 1fr;
+  grid-template-rows: 100px 1fr;
   min-height: 100vh;
   
 }
@@ -16,8 +14,9 @@
 }
 
 .fav-count {
-  font-size: 0.9rem; /* Reduce font size for count */
-  margin-bottom: 0.5rem; /* Add spacing between count and next item */
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
 }
 .main{
   background-color: #CAF4FF;
@@ -31,7 +30,7 @@
   grid-area: nav;
 }
 a:hover{
-  background-color: rgb(164, 198, 241);
+  background-color: rgb(132, 190, 221);
 }
 
 .toolbar{
@@ -62,6 +61,22 @@ a:hover{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 20px;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #7983ff; /* Spinner color */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite; /* Animation */
+  margin: auto; /* Center the spinner */
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .card {
@@ -115,7 +130,7 @@ a:hover{
       "nav"
       "main";
       grid-template-columns:  1fr;
-      grid-template-rows: 4% 4% 1fr ;
+      grid-template-rows: 100px 90px 1fr ;
       min-height: 100vh;
   
   }

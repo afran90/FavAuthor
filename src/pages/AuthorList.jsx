@@ -16,6 +16,7 @@ export const AuthorList = () => {
   useEffect(() => {
     const fetchAuthors = async () => {
       try {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         const response = await fetch(
           `https://api.quotable.io/authors?limit=${limit}&skip=${skip}`
         );
@@ -35,7 +36,7 @@ export const AuthorList = () => {
     return () => {};
   }, [skip, limit]);
 
-  const addToFavorite = (author) => {
+  const toggleFavorite = (author) => {
     if (!author) return;
     if (favAuthors.filter((id) => id._id === author._id).length > 0) {
       dispatch(removeFavAuthor(author._id));
@@ -53,13 +54,13 @@ export const AuthorList = () => {
     <>
       <div className="author-list">
         {loading ? (
-          <p>Loading...</p>
+          <div className="loading-spinner"></div>
         ) : (
           <div className="grid-container">
             {authors.map((author) => (
               <AuthorCard
                 author={author}
-                onClick={addToFavorite}
+                onClick={toggleFavorite}
                 isFavAuthor={
                   favAuthors.filter((id) => id._id === author._id).length > 0
                 }
